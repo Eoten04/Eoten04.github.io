@@ -203,13 +203,15 @@
         <div class="section-label reveal">03 — Compétences</div>
         <h2 class="section-title reveal">Stack technique</h2>
         <div class="skills-grid">
-          <div class="skill-category reveal" v-for="cat in skills" :key="cat.name">
+          <div class="skill-category reveal" v-for="(group, groupName) in groupedTech" :key="groupName">
             <div class="skill-cat-header">
-              <span class="skill-cat-icon">{{ cat.icon }}</span>
-              <h3>{{ cat.name }}</h3>
+              <h3>{{ groupName }}</h3>
             </div>
             <div class="skill-badges">
-              <span class="badge" v-for="skill in cat.items" :key="skill">{{ skill }}</span>
+              <span class="badge" v-for="skill in group" :key="skill.name">
+                <img :src="`/icons/${skill.icon}`" :alt="`${skill.name} icon`" class="badge-icon-svg" />
+                {{ skill.name }}
+              </span>
             </div>
           </div>
         </div>
@@ -382,28 +384,7 @@ const groupedTech = {
 
 const expTags = ['CakePHP', 'PHP', 'MySQL', 'Docker', 'Git', 'School Maker', 'CI/CD', 'HTML', 'CSS', 'JavaScript']
 
-const skills = [
-  {
-    icon: '🌐',
-    name: 'Développement Web',
-    items: ['CakePHP', 'PHP', 'HTML', 'CSS', 'JavaScript', 'Bootstrap'],
-  },
-  {
-    icon: '🛠',
-    name: 'Outils & Environnement',
-    items: ['Docker', 'Git', 'Microsoft 365'],
-  },
-  {
-    icon: '🗃',
-    name: 'Bases de données',
-    items: ['MySQL', 'SQLite', 'MariaDB', 'Neo4j'],
-  },
-  {
-    icon: '💻',
-    name: 'Autres langages',
-    items: ['Python', 'Java'],
-  },
-]
+// Skills data removed, currently using the same groupedTech array as 'À propos'
 
 const projects = [
   {
@@ -797,10 +778,10 @@ html, body {
 .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
 .skill-category { background: var(--card-bg-solid); border: 1px solid var(--border-solid); border-radius: 16px; padding: 1.75rem; }
 .skill-cat-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
-.skill-cat-icon { font-size: 1.5rem; }
 .skill-cat-header h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-heading); }
 .skill-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.badge { background: var(--badge-bg); border: 1px solid var(--badge-border); color: var(--text-main); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; }
+.badge { background: var(--badge-bg); border: 1px solid var(--badge-border); color: var(--text-main); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; }
+.badge-icon-svg { width: 16px; height: 16px; object-fit: contain; }
 
 /* Projects */
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
