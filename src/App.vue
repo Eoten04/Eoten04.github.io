@@ -203,7 +203,7 @@
             </div>
             <div class="skill-badges">
               <span class="badge" v-for="skill in group" :key="skill.name">
-                <img :src="`/icons/${skill.icon}`" :alt="`${skill.name} icon`" class="badge-icon-svg" />
+                <img :src="getIconPath(skill.icon)" :alt="`${skill.name} icon`" class="badge-icon-svg" />
                 {{ skill.name }}
               </span>
             </div>
@@ -377,6 +377,10 @@ const groupedTech = {
 }
 
 const expTags = ['CakePHP', 'PHP', 'MySQL', 'Docker', 'Git', 'School Maker', 'CI/CD', 'HTML', 'CSS', 'JavaScript']
+
+const getIconPath = (iconFileName) => {
+  return `${import.meta.env.BASE_URL}icons/${iconFileName}`
+}
 
 // Skills data removed, currently using the same groupedTech array as 'À propos'
 
