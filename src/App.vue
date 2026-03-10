@@ -76,16 +76,10 @@
             <p>Étudiant en <strong>3ème année de BUT Informatique</strong>, je me passionne pour le développement web sous toutes ses formes — de la conception d'interfaces propres à l'architecture de systèmes back-end robustes.</p>
             <p>J'aime particulièrement les projets qui demandent de <strong>repartir de zéro</strong> ou de <strong>moderniser l'existant</strong> : revoir une architecture, migrer une base de données, conteneuriser un environnement ou refondre une UI. Ce qui me motive, c'est de livrer quelque chose qui tient dans le temps.</p>
             <p>En dehors du code, je suis quelqu'un de <strong>curieux et méthodique</strong>, toujours à chercher la meilleure façon de faire les choses plutôt que la plus rapide.</p>
-            <div class="about-tags-grouped">
-              <div v-for="(group, groupName) in groupedTech" :key="groupName" class="tag-group">
-                <div class="tag-group-title">{{ groupName }}</div>
-                <div class="about-tags">
-                  <span class="tag" v-for="t in group" :key="t.name">
-                    <img :src="`/icons/${t.icon}`" :alt="`${t.name} icon`" class="tag-icon-svg" />
-                    {{ t.name }}
-                  </span>
-                </div>
-              </div>
+            <div class="about-cta reveal" style="margin-top: 2rem;">
+              <a href="#skills" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;" @click.prevent="scrollTo('skills')">
+                <span style="font-size: 1.2rem;">⚡</span> Découvrir ma stack technique
+              </a>
             </div>
           </div>
           <div class="about-card reveal">
