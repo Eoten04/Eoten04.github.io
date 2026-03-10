@@ -72,7 +72,9 @@
             <p>J'aime particulièrement les projets qui demandent de <strong>repartir de zéro</strong> ou de <strong>moderniser l'existant</strong> : revoir une architecture, migrer une base de données, conteneuriser un environnement ou refondre une UI. Ce qui me motive, c'est de livrer quelque chose qui tient dans le temps.</p>
             <p>En dehors du code, je suis quelqu'un de <strong>curieux et méthodique</strong>, toujours à chercher la meilleure façon de faire les choses plutôt que la plus rapide.</p>
             <div class="about-tags">
-              <span class="tag" v-for="t in dailyTech" :key="t">{{ t }}</span>
+              <span class="tag" v-for="t in dailyTech" :key="t">
+                <span class="tag-icon">{{ getTechIcon(t) }}</span>{{ t }}
+              </span>
             </div>
           </div>
           <div class="about-card reveal">
@@ -405,6 +407,24 @@ const projects = [
     demoLink: 'https://widee.dev',
   },
 ]
+
+function getTechIcon(name) {
+  const icons = {
+    'CakePHP': '🍰',
+    'Symfony': '🎼',
+    'Vue.js': '🟩',
+    'PHP': '🐘',
+    'JavaScript': '🟨',
+    'HTML': '🟧',
+    'CSS': '🟦',
+    'Bootstrap': '🟪',
+    'MySQL': '🐬',
+    'Neo4j': '🕸️',
+    'Docker': '🐳'
+  }
+  return icons[name] || '💻'
+}
+
 function handleResize() {
   isMobile.value = window.innerWidth <= 1024;
 }
@@ -638,7 +658,8 @@ html, body {
 .about-text p { color: #c9d1d9; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; }
 .about-text strong { color: #fff; }
 .about-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
-.tag { background: rgba(88, 166, 255, 0.1); color: #58a6ff; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+.tag { background: rgba(88, 166, 255, 0.1); color: #58a6ff; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; }
+.tag-icon { font-size: 1rem; }
 .about-card { background: #161b22; border: 1px solid #21262d; border-radius: 16px; padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
 .card-item { display: flex; gap: 1rem; }
 .card-icon { width: 40px; height: 40px; background: #0d1117; border: 1px solid #30363d; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
