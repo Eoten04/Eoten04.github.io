@@ -262,12 +262,19 @@
         <div class="section-label reveal">05 — Contact</div>
         <h2 class="section-title reveal">Travaillons ensemble</h2>
         <p class="contact-intro reveal">Une opportunité, un projet, ou simplement envie d'échanger ? N'hésitez pas à me contacter.</p>
-        <div class="contact-cards reveal">
+        <div class="contact-cards reveal" style="flex-wrap: wrap;">
           <a href="mailto:eotenfrere@gmail.com" class="contact-card">
             <div class="contact-icon">✉️</div>
             <div class="contact-info">
               <div class="contact-label">Email</div>
               <div class="contact-value">eotenfrere@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/eoten-fr%C3%A8re-114a72295/" target="_blank" rel="noopener" class="contact-card">
+            <div class="contact-icon">🔗</div>
+            <div class="contact-info">
+              <div class="contact-label">LinkedIn</div>
+              <div class="contact-value">Eoten FRÈRE</div>
             </div>
           </a>
         </div>
