@@ -689,6 +689,11 @@ html, body {
   padding: 3rem 4rem;
 }
 
+/* Masquer le contenu des cartes qui sont en position d'onglet gauche */
+.section-card:has(.tab-left) .card-inner-scroll {
+  visibility: hidden;
+}
+
 /* ── SIDE TAB (ONGLET) ── */
 .side-tab {
   position: absolute;
