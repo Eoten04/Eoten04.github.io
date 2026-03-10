@@ -53,7 +53,7 @@
       </div>
     
       </div>
-      <div class="side-tab">
+      <div class="side-tab" :class="{ 'tab-left': isCardBeforeActive('hero') }">
         <span class="side-tab-text">{{ getTabLabel('hero') }}</span>
       </div>
     </section>
@@ -116,7 +116,7 @@
       </div>
     
       </div>
-      <div class="side-tab">
+      <div class="side-tab" :class="{ 'tab-left': isCardBeforeActive('about') }">
         <span class="side-tab-text">{{ getTabLabel('about') }}</span>
       </div>
     </section>
@@ -178,7 +178,7 @@
       </div>
     
       </div>
-      <div class="side-tab">
+      <div class="side-tab" :class="{ 'tab-left': isCardBeforeActive('experience') }">
         <span class="side-tab-text">{{ getTabLabel('experience') }}</span>
       </div>
     </section>
@@ -212,7 +212,7 @@
       </div>
     
       </div>
-      <div class="side-tab">
+      <div class="side-tab" :class="{ 'tab-left': isCardBeforeActive('skills') }">
         <span class="side-tab-text">{{ getTabLabel('skills') }}</span>
       </div>
     </section>
@@ -252,7 +252,7 @@
       </div>
     
       </div>
-      <div class="side-tab">
+      <div class="side-tab" :class="{ 'tab-left': isCardBeforeActive('projects') }">
         <span class="side-tab-text">{{ getTabLabel('projects') }}</span>
       </div>
     </section>
@@ -297,7 +297,7 @@
       </div>
       
       </div>
-      <div class="side-tab">
+      <div class="side-tab" :class="{ 'tab-left': isCardBeforeActive('contact') }">
         <span class="side-tab-text">{{ getTabLabel('contact') }}</span>
       </div>
     </section>
@@ -456,41 +456,50 @@ function getTabLabel(id) {
   return lbls[id] || id;
 }
 
+function isCardBeforeActive(id) {
+  return sectionIds.indexOf(id) < sectionIds.indexOf(activeSection.value)
+}
+
 function getCardStyle(id) {
+  const index = sectionIds.indexOf(id)
+  const activeIndex = sectionIds.indexOf(activeSection.value)
+  const countBefore = activeIndex
+  const countAfter = sectionIds.length - activeIndex - 1
+
   if (isMobile.value) {
+    const base = { left: '2rem', right: '2rem', width: 'auto' }
     if (activeSection.value === id) {
-      return { transform: 'translateY(0)', opacity: 1, zIndex: 10, pointerEvents: 'auto' }
+      return { ...base, transform: 'translateY(0)', opacity: 1, zIndex: 10, pointerEvents: 'auto' }
     } else {
-      return { transform: 'translateY(50px)', opacity: 0, zIndex: 0, pointerEvents: 'none' }
+      return { ...base, transform: 'translateY(50px)', opacity: 0, zIndex: 0, pointerEvents: 'none' }
     }
   }
 
-  const index = sectionIds.indexOf(id)
-  const activeIndex = sectionIds.indexOf(activeSection.value)
-  const countAfter = sectionIds.length - activeIndex - 1
-  const cardWidth = `calc(100vw - 4rem - ${countAfter * TAB_WIDTH}px)`
+  const cardWidth = `calc(100vw - 4rem - ${(countBefore + countAfter) * TAB_WIDTH}px)`
 
   if (index === activeIndex) {
     return {
       zIndex: 50,
+      left: `calc(2rem + ${countBefore * TAB_WIDTH}px)`,
       transform: 'translateX(0)',
       width: cardWidth,
       cursor: 'default'
     }
   } else if (index < activeIndex) {
-    // Cartes précédentes — hors écran à gauche
+    // Left tabs: accumulate from left
     return {
-      zIndex: 5,
-      transform: 'translateX(calc(-100% - 4rem))',
+      zIndex: 20 + index,
+      left: `calc(2rem + ${index * TAB_WIDTH}px)`,
+      transform: 'translateX(0)',
       width: cardWidth,
-      opacity: 0,
-      pointerEvents: 'none'
+      cursor: 'pointer'
     }
   } else {
-    // Cartes suivantes — tabs à droite
-    const tabIndex = index - activeIndex - 1 // 0 = le plus proche de la carte active
+    // Right tabs
+    const tabIndex = index - activeIndex - 1
     return {
       zIndex: 20 - tabIndex,
+      left: `calc(2rem + ${countBefore * TAB_WIDTH}px)`,
       transform: `translateX(${(tabIndex + 1) * TAB_WIDTH}px)`,
       width: cardWidth,
       cursor: 'pointer'
@@ -644,15 +653,15 @@ html, body {
   position: absolute;
   top: calc(70px + 3rem);
   bottom: 2rem;
-  left: 2rem;
-  width: calc(100vw - 4rem - 350px); /* fallback, overridden by inline style */
+  left: 2rem; /* fallback overridden by inline style */
+  width: calc(100vw - 4rem); /* fallback */
   background: var(--card-bg);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
   border: 1px solid var(--border-color);
   border-radius: 24px;
   box-shadow: -15px 0 50px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.5s, width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), top 0.6s, bottom 0.6s, background-color 0.3s, border-color 0.3s;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.5s, width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), left 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), top 0.6s, bottom 0.6s, background-color 0.3s, border-color 0.3s;
   overflow: hidden;
   display: flex;
 }
@@ -700,6 +709,17 @@ html, body {
   text-transform: uppercase;
   transition: all 0.3s;
   opacity: 1;
+}
+
+.side-tab.tab-left {
+  right: auto;
+  left: 0;
+  border-left: none;
+  border-right: 1px solid var(--border-color);
+}
+
+.side-tab.tab-left .side-tab-text {
+  transform: rotate(0deg); /* texte lisible vers le bas pour les tabs gauches */
 }
 
 .section-card.active .side-tab {
