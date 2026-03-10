@@ -318,7 +318,7 @@ const navLinks = [
   { id: 'contact', label: 'Contact' },
 ]
 
-const dailyTech = ['CakePHP', 'PHP', 'JavaScript', 'HTML', 'CSS', 'MySQL', 'Docker']
+const dailyTech = ['CakePHP', 'Symfony', 'Vue.js', 'PHP', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'MySQL', 'Neo4j', 'Docker']
 
 const expTags = ['CakePHP', 'PHP', 'MySQL', 'Docker', 'Git', 'School Maker', 'CI/CD', 'HTML', 'CSS', 'JavaScript']
 
