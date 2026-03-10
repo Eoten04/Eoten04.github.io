@@ -486,13 +486,14 @@ function getCardStyle(id) {
       cursor: 'default'
     }
   } else if (index < activeIndex) {
-    // Left tabs: accumulate from left
+    // Left tabs: accumulate from left, clip to only show the visible 70px tab
     return {
       zIndex: 20 + index,
       left: `calc(2rem + ${index * TAB_WIDTH}px)`,
       transform: 'translateX(0)',
       width: cardWidth,
-      cursor: 'pointer'
+      cursor: 'pointer',
+      clipPath: 'inset(0 calc(100% - 70px) 0 0 round 24px)'
     }
   } else {
     // Right tabs
