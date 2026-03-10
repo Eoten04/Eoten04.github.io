@@ -344,6 +344,10 @@ const groupedTech = {
   'Infrastructure & Outils': [
     { name: 'Docker', icon: 'docker.svg' },
     { name: 'Git', icon: 'git.svg' }
+  ],
+  'Autres langages': [
+    { name: 'Python', icon: 'python.svg' },
+    { name: 'Java', icon: 'java.svg' }
   ]
 }
 
