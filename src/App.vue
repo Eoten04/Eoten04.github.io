@@ -331,7 +331,7 @@ const groupedTech = {
     { name: 'CakePHP', icon: 'cakephp.svg' },
     { name: 'Symfony', icon: 'symfony.svg' },
     { name: 'PHP', icon: 'php.svg' },
-    { name: 'SQL', icon: 'mysql.svg' },
+    { name: 'MySQL', icon: 'mysql.svg' },
     { name: 'Neo4j', icon: 'neo4j.svg' }
   ],
   'Front-End': [
@@ -676,8 +676,8 @@ html, body {
 .tag-group { display: flex; flex-direction: column; gap: 0.5rem; }
 .tag-group-title { font-size: 0.8rem; font-weight: 700; color: #8b949e; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
 .about-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-.tag { background: rgba(88, 166, 255, 0.1); color: #58a6ff; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; }
-.tag-icon-svg { width: 16px; height: 16px; object-fit: contain; }
+.tag { background: rgba(88, 166, 255, 0.1); color: #58a6ff; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; }
+.tag-icon-svg { width: 22px; height: 22px; object-fit: contain; }
 .about-card { background: #161b22; border: 1px solid #21262d; border-radius: 16px; padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
 .card-item { display: flex; gap: 1rem; }
 .card-icon { width: 40px; height: 40px; background: #0d1117; border: 1px solid #30363d; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
