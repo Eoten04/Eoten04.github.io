@@ -47,8 +47,8 @@
         <h2 class="hero-title reveal">Développeur Web <span class="sep">|</span> Étudiant BUT Informatique 3ème année</h2>
         <p class="hero-tagline reveal">Passionné par le développement web, la conception d'applications robustes et la modernisation d'architectures existantes.</p>
         <div class="hero-cta reveal">
-          <a href="#projects" class="btn-primary" @click.prevent="scrollTo('projects')">Voir mes projets</a>
-          <a href="#contact" class="btn-outline" @click.prevent="scrollTo('contact')">Me contacter</a>
+          <a href="#projects" class="btn-primary" @click.stop.prevent="scrollTo('projects')">Voir mes projets</a>
+          <a href="#contact" class="btn-outline" @click.stop.prevent="scrollTo('contact')">Me contacter</a>
         </div>
       </div>
     
@@ -779,7 +779,7 @@ html, body {
 .skill-cat-header h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-heading); }
 .skill-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .badge { background: var(--badge-bg); border: 1px solid var(--badge-border); color: var(--text-main); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; }
-.badge-icon-svg { width: 16px; height: 16px; object-fit: contain; }
+.badge-icon-svg { width: 22px; height: 22px; object-fit: contain; }
 
 /* Projects */
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
