@@ -77,7 +77,7 @@
             <p>J'aime particulièrement les projets qui demandent de <strong>repartir de zéro</strong> ou de <strong>moderniser l'existant</strong> : revoir une architecture, migrer une base de données, conteneuriser un environnement ou refondre une UI. Ce qui me motive, c'est de livrer quelque chose qui tient dans le temps.</p>
             <p>En dehors du code, je suis quelqu'un de <strong>curieux et méthodique</strong>, toujours à chercher la meilleure façon de faire les choses plutôt que la plus rapide.</p>
             <div class="about-cta reveal" style="margin-top: 2rem;">
-              <a href="#skills" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;" @click.prevent="setActiveCard(3)">
+              <a href="#skills" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;" @click.stop.prevent="scrollTo('skills')">
                 <span style="font-size: 1.2rem;">⚡</span> Découvrir ma stack technique
               </a>
             </div>
