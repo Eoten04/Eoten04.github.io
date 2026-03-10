@@ -331,7 +331,7 @@ const groupedTech = {
     { name: 'CakePHP', icon: 'cakephp.svg' },
     { name: 'Symfony', icon: 'symfony.svg' },
     { name: 'PHP', icon: 'php.svg' },
-    { name: 'MySQL', icon: 'mysql.svg' },
+    { name: 'SQL', icon: 'mysql.svg' },
     { name: 'Neo4j', icon: 'neo4j.svg' }
   ],
   'Front-End': [
@@ -343,7 +343,8 @@ const groupedTech = {
   ],
   'Infrastructure & Outils': [
     { name: 'Docker', icon: 'docker.svg' },
-    { name: 'Git', icon: 'git.svg' }
+    { name: 'Git', icon: 'git.svg' },
+    { name: 'Bash', icon: 'bash.svg' }
   ],
   'Autres langages': [
     { name: 'Python', icon: 'python.svg' },
