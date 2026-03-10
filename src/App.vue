@@ -71,10 +71,16 @@
             <p>Étudiant en <strong>3ème année de BUT Informatique</strong>, je me passionne pour le développement web sous toutes ses formes — de la conception d'interfaces propres à l'architecture de systèmes back-end robustes.</p>
             <p>J'aime particulièrement les projets qui demandent de <strong>repartir de zéro</strong> ou de <strong>moderniser l'existant</strong> : revoir une architecture, migrer une base de données, conteneuriser un environnement ou refondre une UI. Ce qui me motive, c'est de livrer quelque chose qui tient dans le temps.</p>
             <p>En dehors du code, je suis quelqu'un de <strong>curieux et méthodique</strong>, toujours à chercher la meilleure façon de faire les choses plutôt que la plus rapide.</p>
-            <div class="about-tags">
-              <span class="tag" v-for="t in dailyTech" :key="t">
-                <span class="tag-icon">{{ getTechIcon(t) }}</span>{{ t }}
-              </span>
+            <div class="about-tags-grouped">
+              <div v-for="(group, groupName) in groupedTech" :key="groupName" class="tag-group">
+                <div class="tag-group-title">{{ groupName }}</div>
+                <div class="about-tags">
+                  <span class="tag" v-for="t in group" :key="t.name">
+                    <img :src="`/icons/${t.icon}`" :alt="`${t.name} icon`" class="tag-icon-svg" />
+                    {{ t.name }}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
           <div class="about-card reveal">
@@ -320,7 +326,26 @@ const navLinks = [
   { id: 'contact', label: 'Contact' },
 ]
 
-const dailyTech = ['CakePHP', 'Symfony', 'Vue.js', 'PHP', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'MySQL', 'Neo4j', 'Docker']
+const groupedTech = {
+  'Back-End & Base de données': [
+    { name: 'CakePHP', icon: 'cakephp.svg' },
+    { name: 'Symfony', icon: 'symfony.svg' },
+    { name: 'PHP', icon: 'php.svg' },
+    { name: 'MySQL', icon: 'mysql.svg' },
+    { name: 'Neo4j', icon: 'neo4j.svg' }
+  ],
+  'Front-End': [
+    { name: 'Vue.js', icon: 'vue.svg' },
+    { name: 'JavaScript', icon: 'js.svg' },
+    { name: 'HTML', icon: 'html-5.svg' },
+    { name: 'CSS', icon: 'css-3.svg' },
+    { name: 'Bootstrap', icon: 'bootstrap.svg' }
+  ],
+  'Infrastructure & Outils': [
+    { name: 'Docker', icon: 'docker.svg' },
+    { name: 'Git', icon: 'git.svg' }
+  ]
+}
 
 const expTags = ['CakePHP', 'PHP', 'MySQL', 'Docker', 'Git', 'School Maker', 'CI/CD', 'HTML', 'CSS', 'JavaScript']
 
@@ -408,22 +433,7 @@ const projects = [
   },
 ]
 
-function getTechIcon(name) {
-  const icons = {
-    'CakePHP': '🍰',
-    'Symfony': '🎼',
-    'Vue.js': '🟩',
-    'PHP': '🐘',
-    'JavaScript': '🟨',
-    'HTML': '🟧',
-    'CSS': '🟦',
-    'Bootstrap': '🟪',
-    'MySQL': '🐬',
-    'Neo4j': '🕸️',
-    'Docker': '🐳'
-  }
-  return icons[name] || '💻'
-}
+// getTechIcon is no longer used for About section, maintained for legacy if needed or removable
 
 function handleResize() {
   isMobile.value = window.innerWidth <= 1024;
@@ -657,9 +667,12 @@ html, body {
 .about-grid { display: grid; gap: 3rem; grid-template-columns: 1fr 350px; }
 .about-text p { color: #c9d1d9; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; }
 .about-text strong { color: #fff; }
-.about-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+.about-tags-grouped { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+.tag-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.tag-group-title { font-size: 0.8rem; font-weight: 700; color: #8b949e; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+.about-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .tag { background: rgba(88, 166, 255, 0.1); color: #58a6ff; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; }
-.tag-icon { font-size: 1rem; }
+.tag-icon-svg { width: 16px; height: 16px; object-fit: contain; }
 .about-card { background: #161b22; border: 1px solid #21262d; border-radius: 16px; padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
 .card-item { display: flex; gap: 1rem; }
 .card-icon { width: 40px; height: 40px; background: #0d1117; border: 1px solid #30363d; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
