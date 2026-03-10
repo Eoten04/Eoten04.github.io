@@ -2,7 +2,7 @@
   <div id="app-root">
     <nav class="navbar" :class="theme">
       <div class="nav-inner">
-        <a href="#hero" class="nav-logo" @click.prevent="scrollTo('hero')">EF</a>
+        <a href="#hero" class="nav-logo" @click.prevent="scrollTo('hero')">Eoten FRÈRE</a>
         <ul class="nav-links">
           <li v-for="link in navLinks" :key="link.id">
             <a :href="`#${link.id}`" @click.prevent="scrollTo(link.id)" :class="{ active: activeSection === link.id }">
@@ -43,7 +43,7 @@
         <div class="grid-overlay"></div>
       </div>
       <div class="hero-content">
-        <h1 class="hero-name reveal">Eoten <span class="accent">FRERE</span></h1>
+        <h1 class="hero-name reveal">Eoten <span class="accent">FRÈRE</span></h1>
         <h2 class="hero-title reveal">Développeur Web <span class="sep">|</span> Étudiant BUT Informatique 3ème année</h2>
         <p class="hero-tagline reveal">Passionné par le développement web, la conception d'applications robustes et la modernisation d'architectures existantes.</p>
         <div class="hero-cta reveal">
@@ -289,8 +289,8 @@
         
         <footer style="margin-top: 4rem; border-top: 1px solid #21262d; padding-top: 2rem;">
           <div class="footer-inner" style="display: flex; justify-content: space-between; align-items: center;">
-            <span class="footer-logo" style="font-size: 1.25rem; font-weight: 800; color: #58a6ff;">EF</span>
-            <span class="footer-copy" style="color: #8b949e; font-size: 0.85rem;">© 2026 Eoten FRERE — Développeur Web</span>
+            <span class="footer-logo" style="font-size: 1.25rem; font-weight: 800; color: #58a6ff;">Eoten FRÈRE</span>
+            <span class="footer-copy" style="color: #8b949e; font-size: 0.85rem;">© 2026 Eoten FRÈRE — Développeur Web</span>
           </div>
         </footer>
       </div>
