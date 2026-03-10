@@ -146,7 +146,6 @@
             </div>
             <div style="display: flex; gap: 0.5rem;">
               <a href="https://agrilearn.fr" target="_blank" rel="noopener" class="exp-repo-btn site-btn">Site ↗</a>
-              <a href="https://git.widee.dev/Agrilearn" target="_blank" rel="noopener" class="exp-repo-btn">Repo ↗</a>
             </div>
           </div>
           <div class="exp-context reveal">
@@ -391,7 +390,6 @@ const projects = [
     color: 'linear-gradient(135deg, #667eea, #764ba2)',
     desc: "Refonte complète du site web communal. Migration de CakePHP 3 à CakePHP 5, remplacement d'Elasticsearch par Typesense, migration de Bootstarp 3 à Bootstrap 5, conteneurisation Docker de l'application. Focus sur la préservation du SEO, accessibilité RGAA et responsive design.",
     tags: ['CakePHP 5', 'Typesense', 'Bootstrap 5', 'Docker', 'RGAA'],
-    link: 'https://git.widee.dev/Romain/beaupont5',
     demoLink: 'https://beaupont.fr',
   },
   {
@@ -407,7 +405,6 @@ const projects = [
     <strong>4. Refonte UI/UX et optimisation Front-end (Design cognitif)</strong><br>
     Application de principes de neuro-design (hiérarchie visuelle, appels à l'action) guidés par un spécialiste pour maximiser la lisibilité et l'engagement des interfaces.`,
     tags: ['CakePHP', 'PHP', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Redis', 'MySQL', 'Neo4j', 'Docker', 'API Brevo', 'TCPDF'],
-    link: 'https://git.widee.dev/Agrilearn',
     demoLink: 'https://agrilearn.fr',
   },
   {
