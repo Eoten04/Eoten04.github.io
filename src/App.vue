@@ -14,7 +14,7 @@
           <button class="theme-toggle" @click="toggleTheme" :aria-label="theme === 'dark' ? 'Passer au thème clair' : 'Passer au thème sombre'" :title="theme === 'dark' ? 'Thème clair' : 'Thème sombre'">
             {{ theme === 'dark' ? '☀️' : '🌙' }}
           </button>
-          <button class="burger" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen">
+          <button class="burger" :class="{ open: menuOpen }" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen">
             <span></span><span></span><span></span>
           </button>
         </div>
@@ -509,29 +509,37 @@ function getCardStyle(id) {
 }
 
 function scrollTo(id) {
-  activeSection.value = id
+  if (isMobile.value) {
+    // Sur mobile : scroll natif vers la section
+    const el = document.getElementById(id)
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    menuOpen.value = false
+  } else {
+    // Sur desktop : basculer la carte active
+    activeSection.value = id
+  }
 }
 
+let observer = null
+
 function revealElements() {
-  document.querySelectorAll('.reveal').forEach((el) => {
-    el.classList.add('visible')
-  })
+  document.querySelectorAll('.reveal').forEach((el) => el.classList.add('visible'))
 }
 
 onMounted(() => {
   window.addEventListener('resize', handleResize, { passive: true })
-  
+
   if (theme.value === 'light-theme') {
     document.documentElement.classList.add('light-theme')
     document.body.classList.add('light-theme')
   }
 
-  // Initial reveal for hero section
   setTimeout(revealElements, 100)
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
+  if (observer) observer.disconnect()
 })
 </script>
 
@@ -586,10 +594,17 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden; /* Prevent global scroll */
-  background: var(--bg-color); /* Fill entire window */
+  background: var(--bg-color);
   color: var(--text-main);
   transition: background-color 0.3s, color 0.3s;
+}
+
+/* Sur desktop, bloquer le scroll global (les cartes gèrent leur propre scroll) */
+@media (min-width: 1025px) {
+  html, body {
+    overflow: hidden;
+    height: 100%;
+  }
 }
 </style>
 
@@ -622,7 +637,7 @@ html, body {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
-.nav-inner { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+.nav-inner { width: 100%; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1001; }
 .nav-logo { font-size: 1.5rem; font-weight: 800; color: var(--accent-color); text-decoration: none; }
 .nav-links { display: flex; gap: 2.5rem; list-style: none; }
 .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: color 0.3s; }
@@ -633,10 +648,45 @@ html, body {
 .theme-toggle:hover { background: var(--tag-bg); border-color: var(--accent-color); transform: scale(1.05); }
 
 /* ── MOBILE MENU & BURGER ── */
-.burger { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
-.burger span { width: 25px; height: 3px; background: var(--text-main); border-radius: 2px; transition: 0.3s; }
-.mobile-menu { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--nav-bg-mobile); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; z-index: 1000; opacity: 0; transition: 0.3s; pointer-events: none; }
-.mobile-menu.open { display: flex; opacity: 1; pointer-events: auto; }
+.burger { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 6px; padding: 4px; }
+.burger span { width: 25px; height: 2.5px; background: var(--text-main); border-radius: 2px; transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, width 0.3s ease; display: block; transform-origin: center; }
+/* Animation hamburger → croix */
+.burger.open span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.burger.open span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+.mobile-menu {
+  display: flex;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: var(--nav-bg-mobile);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  z-index: 998;
+  /* État caché */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-16px) scale(0.98);
+  /* Fermeture : visibility disparaît après la fin de l'animation */
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0s linear 0.35s;
+}
+.mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+  /* Ouverture : visibility arrive immédiatement */
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0s linear 0s;
+}
 .mobile-menu a { color: var(--text-heading); text-decoration: none; font-size: 1.5rem; font-weight: 700; transition: 0.2s; }
 .mobile-menu a:hover { color: var(--accent-color); }
 
@@ -848,37 +898,106 @@ footer { margin-top: 3rem; border-top: 1px solid var(--border-solid); padding-to
 .footer-logo { font-size: 1.25rem; font-weight: 800; color: var(--accent-color); }
 .footer-copy { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 2rem; } /* added bot margin so it clears bottom */
 
-/* Responsive Mobile */
+/* ═══════════════════════════════════
+   RESPONSIVE MOBILE — Scroll classique
+   ═══════════════════════════════════ */
 @media (max-width: 1024px) {
+
+  /* L'app reprend sa hauteur naturelle */
+  #app-root {
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Le conteneur principal : simple flux vertical */
+  .cards-container {
+    position: static;
+    width: 100%;
+    height: auto;
+    padding-top: 0;
+    overflow: visible;
+    background: none;
+  }
+
+  /* ─── Supprimer TOUT le style de carte sur mobile ─── */
   .section-card {
-    position: relative;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
+    position: static !important;
+    top: auto !important; left: auto !important;
+    right: auto !important; bottom: auto !important;
     width: 100% !important;
-    height: 100%;
+    height: auto !important;
+    min-height: auto !important;
     transform: none !important;
     opacity: 1 !important;
     pointer-events: auto !important;
-    z-index: 1 !important;
-    border-radius: 0;
-    border: none;
-    box-shadow: none;
-    background: transparent;
-    padding-top: 0;
+    clip-path: none !important;
+    z-index: auto !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    display: block;
   }
-  .cards-container {
-    padding-top: calc(70px + 1rem); /* top space */
-    overflow-y: auto; /* Allow full scroll on mobile */
+
+  .section-card.inactive {
+    top: auto !important;
+    bottom: auto !important;
+    opacity: 1 !important;
   }
-  .side-tab { display: none; }
-  .card-inner-scroll { padding: 1.5rem; overflow: visible; }
+
+  /* Le contenu de chaque section prend l'espace naturellement */
+  .card-inner-scroll {
+    height: auto !important;
+    overflow: visible !important;
+    padding: 3.5rem 1.25rem;
+    scrollbar-width: none;
+  }
+  .card-inner-scroll::-webkit-scrollbar { display: none; }
+
+  /* Un trait de séparation subtil entre les grandes sections */
+  .section-card:not(:first-child) .card-inner-scroll {
+    border-top: 1px solid var(--border-solid);
+    padding-top: 3.5rem;
+  }
+
+  /* Espace pour le navbar fixe au-dessus de la première section */
+  .section-card:first-child .card-inner-scroll {
+    padding-top: calc(70px + 2rem);
+  }
+
+  /* Cacher les onglets latéraux */
+  .side-tab { display: none !important; }
+
+  /* Nav */
   .nav-links { display: none; }
   .burger { display: flex; }
+
+  /* Grilles en 1 colonne */
+  .about-grid,
+  .exp-missions,
+  .skills-grid,
+  .projects-grid { grid-template-columns: 1fr; }
+
+  /* Taille des titres adaptée */
+  .hero-name { font-size: clamp(2rem, 9vw, 2.8rem); }
+  .hero-title { font-size: 0.95rem; }
+  .section-title { font-size: 1.8rem; margin-bottom: 2rem; }
+
+  /* Contact cards en colonne */
+  .contact-cards { flex-direction: column; }
+  .contact-card { max-width: 100%; }
+
+  /* Expérience : width à 100% pour les boutons */
+  .exp-repo-btn { flex: 1; justify-content: center; }
 }
 
-@media (max-width: 768px) {
-  .about-grid, .exp-missions, .skills-grid, .projects-grid { grid-template-columns: 1fr; }
+/* Très petits écrans */
+@media (max-width: 480px) {
+  .card-inner-scroll { padding: 3rem 1rem; }
+  .section-card:first-child .card-inner-scroll { padding-top: calc(70px + 1.5rem); }
+  .hero-name { font-size: clamp(1.8rem, 10vw, 2.4rem); }
+  .btn-primary, .btn-outline { padding: 0.7rem 1.1rem; font-size: 0.9rem; }
 }
 </style>
