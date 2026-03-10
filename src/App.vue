@@ -137,7 +137,10 @@
                 <div class="exp-role">Développeur Web — Stage</div>
               </div>
             </div>
-            <a href="https://git.widee.dev/Agrilearn" target="_blank" rel="noopener" class="exp-repo-btn">Voir le repo ↗</a>
+            <div style="display: flex; gap: 0.5rem;">
+              <a href="https://agrilearn.fr" target="_blank" rel="noopener" class="exp-repo-btn site-btn">Site ↗</a>
+              <a href="https://git.widee.dev/Agrilearn" target="_blank" rel="noopener" class="exp-repo-btn">Repo ↗</a>
+            </div>
           </div>
           <div class="exp-context reveal">
             <p>L'entreprise disposait d'une architecture <strong>fragmentée en 5 briques distinctes</strong> : authentification, e-learning, boutique, API et CDN reposant sur une base de données <strong>Neo4j</strong>. Ma mission : rationaliser et moderniser l'ensemble.</p>
@@ -230,7 +233,10 @@
               <div class="project-tags">
                 <span class="project-tag" v-for="tag in project.tags" :key="tag">{{ tag }}</span>
               </div>
-              <a v-if="project.link" :href="project.link" target="_blank" rel="noopener" class="project-link">Repo ↗</a>
+              <div style="display: flex; gap: 0.5rem; flex-shrink: 0; align-items: center;">
+                <a v-if="project.demoLink" :href="project.demoLink" target="_blank" rel="noopener" class="project-link site-btn">Site ↗</a>
+                <a v-if="project.link" :href="project.link" target="_blank" rel="noopener" class="project-link">Repo ↗</a>
+              </div>
             </div>
           </div>
         </div>
@@ -340,6 +346,7 @@ const projects = [
     desc: "Refonte complète du site web communal. Migration de CakePHP 3 à CakePHP 5, remplacement d'Elasticsearch par Typesense, migration de Bootstarp 3 à Bootstrap 5, conteneurisation Docker de l'application. Focus sur la préservation du SEO, accessibilité RGAA et responsive design.",
     tags: ['CakePHP 5', 'Typesense', 'Bootstrap 5', 'Docker', 'RGAA'],
     link: 'https://git.widee.dev/Romain/beaupont5',
+    demoLink: 'https://beaupont.fr',
   },
   {
     title: 'Développeur Full Stack — Agrilearn',
@@ -355,6 +362,7 @@ const projects = [
     Application de principes de neuro-design (hiérarchie visuelle, appels à l'action) guidés par un spécialiste pour maximiser la lisibilité et l'engagement des interfaces.`,
     tags: ['CakePHP', 'PHP', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Redis', 'MySQL', 'Neo4j', 'Docker', 'API Brevo', 'TCPDF'],
     link: 'https://git.widee.dev/Agrilearn',
+    demoLink: 'https://agrilearn.fr',
   },
   {
     title: 'Fromagerie de Saint Julien',
@@ -362,6 +370,7 @@ const projects = [
     color: 'linear-gradient(135deg, #f093fb, #f5576c)',
     desc: "Mise à jour et modernisation du site web. Migration de CakePHP 3 vers CakePHP 5 et conteneurisation complète de l'environnement de développement avec Docker.",
     tags: ['CakePHP 5', 'Docker', 'Migration'],
+    demoLink: 'https://boutiqueducomte.com/',
   },
   {
     title: 'Application Météo / Solaire',
@@ -370,6 +379,7 @@ const projects = [
     desc: "Application web CakePHP pour récupérer, stocker et visualiser en temps réel les données de panneaux solaires et d'une station météorologique.",
     tags: ['CakePHP', 'Python', 'Bash', 'MariaDB', 'HTML', 'CSS', 'JavaScript', 'PHP'],
     link: 'https://iutbg-gitlab.iutbourg.univ-lyon1.fr/sae-but2/2024-25/pilotage-donnees-station-meteo',
+    demoLink: 'https://iutbgdgt-meteo.iutbourg.univ-lyon1.fr',
   },
   {
     title: 'Gestion de Recettes',
@@ -385,6 +395,7 @@ const projects = [
     color: 'linear-gradient(135deg, #fa8231, #f7b731)',
     desc: "Refonte complète de l'interface utilisateur de deux sites web : <a href='https://widee.dev' target='_blank' rel='noopener'>widee.dev</a> et la page dédiée de Transports Perrier. Modernisation graphique, optimisation de l'expérience utilisateur et amélioration de la performance front-end.",
     tags: ['HTML', 'CSS', 'JavaScript', 'UI/UX', 'Responsive'],
+    demoLink: 'https://widee.dev',
   },
 ]
 function handleResize() {
@@ -634,8 +645,10 @@ html, body {
 .exp-logo { width: 50px; height: 50px; background: linear-gradient(135deg, #1f6feb, #58a6ff); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem; color: #fff; flex-shrink: 0; }
 .exp-name { font-size: 1.25rem; font-weight: 700; color: #e6edf3; margin-bottom: 0.25rem; }
 .exp-role { color: #8b949e; font-size: 0.9rem; font-weight: 500; }
-.exp-repo-btn { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.85rem; font-weight: 600; color: #58a6ff; text-decoration: none; padding: 0.5rem 1rem; border: 1px solid rgba(88, 166, 255, 0.3); border-radius: 8px; transition: background 0.2s, border-color 0.2s; }
+.exp-repo-btn { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.85rem; font-weight: 600; color: #58a6ff; text-decoration: none; padding: 0.5rem 1rem; border: 1px solid rgba(88, 166, 255, 0.3); border-radius: 8px; transition: background 0.2s, border-color 0.2s, color 0.2s; }
 .exp-repo-btn:hover { background: rgba(88, 166, 255, 0.1); border-color: rgba(88, 166, 255, 0.6); }
+.exp-repo-btn.site-btn { background: #58a6ff; color: #0d1117; border-color: #58a6ff; }
+.exp-repo-btn.site-btn:hover { background: #1f6feb; border-color: #1f6feb; color: #fff; }
 .exp-context p { color: #c9d1d9; font-size: 1rem; line-height: 1.7; }
 .exp-missions { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
 .exp-mission-col h4 { font-size: 1rem; font-weight: 600; color: #e6edf3; margin-bottom: 1rem; }
@@ -666,8 +679,10 @@ html, body {
 .project-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
 .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; flex: 1; }
 .project-tag { background: #0d1117; border: 1px solid #30363d; color: #8b949e; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500; }
-.project-link { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; font-weight: 600; color: #58a6ff; text-decoration: none; white-space: nowrap; padding: 0.25rem 0.65rem; border: 1px solid rgba(88, 166, 255, 0.3); border-radius: 6px; transition: background 0.2s, border-color 0.2s; flex-shrink: 0; }
+.project-link { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; font-weight: 600; color: #58a6ff; text-decoration: none; white-space: nowrap; padding: 0.25rem 0.65rem; border: 1px solid rgba(88, 166, 255, 0.3); border-radius: 6px; transition: background 0.2s, border-color 0.2s, color 0.2s; flex-shrink: 0; }
 .project-link:hover { background: rgba(88, 166, 255, 0.1); border-color: rgba(88, 166, 255, 0.6); }
+.project-link.site-btn { background: #58a6ff; color: #0d1117; border-color: #58a6ff; }
+.project-link.site-btn:hover { background: #1f6feb; border-color: #1f6feb; color: #fff; }
 
 /* Contact & Footer */
 .contact-intro { font-size: 1.1rem; color: #c9d1d9; max-width: 500px; margin-bottom: 2rem; line-height: 1.6; }
