@@ -465,24 +465,34 @@ function getCardStyle(id) {
     }
   }
 
-  const N = sectionIds.length;
-  const index = sectionIds.indexOf(id);
-  const activeIndex = sectionIds.indexOf(activeSection.value);
+  const index = sectionIds.indexOf(id)
+  const activeIndex = sectionIds.indexOf(activeSection.value)
+  const countAfter = sectionIds.length - activeIndex - 1
+  const cardWidth = `calc(100vw - 4rem - ${countAfter * TAB_WIDTH}px)`
 
   if (index === activeIndex) {
     return {
       zIndex: 50,
       transform: 'translateX(0)',
+      width: cardWidth,
       cursor: 'default'
     }
-  } else {
-    // Les inactives s'entassent vers la DROITE.
-    const visualIndex = index < activeIndex ? index : index - 1; // de 0 à N-2
-    // La distance depuis la droite.
-    const translateX = (visualIndex + 1) * TAB_WIDTH;
+  } else if (index < activeIndex) {
+    // Cartes précédentes — hors écran à gauche
     return {
-      zIndex: 20 - visualIndex, // La plus à droite a z=20.
-      transform: 'translateX(' + translateX + 'px)',
+      zIndex: 5,
+      transform: 'translateX(calc(-100% - 4rem))',
+      width: cardWidth,
+      opacity: 0,
+      pointerEvents: 'none'
+    }
+  } else {
+    // Cartes suivantes — tabs à droite
+    const tabIndex = index - activeIndex - 1 // 0 = le plus proche de la carte active
+    return {
+      zIndex: 20 - tabIndex,
+      transform: `translateX(${(tabIndex + 1) * TAB_WIDTH}px)`,
+      width: cardWidth,
       cursor: 'pointer'
     }
   }
@@ -635,14 +645,14 @@ html, body {
   top: calc(70px + 3rem);
   bottom: 2rem;
   left: 2rem;
-  width: calc(100vw - 4rem - 350px); /* 5 inactives * 70px = 350px */
+  width: calc(100vw - 4rem - 350px); /* fallback, overridden by inline style */
   background: var(--card-bg);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
   border: 1px solid var(--border-color);
   border-radius: 24px;
   box-shadow: -15px 0 50px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s, top 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), bottom 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s, border-color 0.3s;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.5s, width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), top 0.6s, bottom 0.6s, background-color 0.3s, border-color 0.3s;
   overflow: hidden;
   display: flex;
 }
